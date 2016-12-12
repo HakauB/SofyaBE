@@ -15,6 +15,8 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
 
+from django.contrib.auth.models import User
+
 class JSONResponse(HttpResponse):
     """
     An HttpResponse that renders its content into JSON.
@@ -31,6 +33,13 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class GroupViewSet(viewsets.ModelViewSet):
     """

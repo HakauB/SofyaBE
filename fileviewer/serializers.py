@@ -3,10 +3,13 @@ from rest_framework import serializers
 from fileviewer.models import FileHouse
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+
+    filehouses = serializers.PrimaryKeyRelatedField(many=True, queryset=FileHouse.objects.all())
+
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('id', 'username', 'email', 'filehouses')
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
