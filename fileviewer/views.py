@@ -16,6 +16,8 @@ from rest_framework import mixins
 from rest_framework import generics
 
 from django.contrib.auth.models import User
+from rest_framework import permissions
+from fileviewer.permissions import IsOwnerOrReadOnly
 
 class JSONResponse(HttpResponse):
     """
@@ -51,8 +53,9 @@ class GroupViewSet(viewsets.ModelViewSet):
 class FileHouseList(generics.ListCreateAPIView):
     queryset = FileHouse.objects.all()
     serializer_class = FileHouseSerializer
-
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
 
 class FileHouseDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = FileHouse.objects.all()
     serializer_class = FileHouseSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)

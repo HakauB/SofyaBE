@@ -18,6 +18,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 class FileHouseSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = FileHouse
-        fields = ('submitted', 'title', 'data', 'filetype')
+        fields = ('submitted', 'title', 'data', 'filetype', 'owner',)
