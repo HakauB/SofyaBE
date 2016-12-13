@@ -5,7 +5,7 @@ from fileviewer.models import FileHouse
 
 class UserSerializer(serializers.ModelSerializer):
 
-    filehouses = serializers.PrimaryKeyRelatedField(many=True, queryset=FileHouse.objects.all())
+    filehouses = serializers.HyperlinkedRelatedField(many=True, view_name='filehouse-detail', read_only=True)
 
     class Meta:
         model = User

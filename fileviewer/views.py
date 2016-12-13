@@ -14,10 +14,20 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
+from rest_framework.decorators import detail_route
 
 from django.contrib.auth.models import User
 from rest_framework import permissions
 from fileviewer.permissions import IsOwnerOrReadOnly
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'filehouses': reverse('filehouse-list', request=request, format=format)
+    })
 
 class JSONResponse(HttpResponse):
     """
@@ -49,6 +59,21 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+class FileHouseViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+    queryset = FileHouse.objects.all()
+    serializer_class = FileHouseSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class FileHouseList(generics.ListCreateAPIView):
     queryset = FileHouse.objects.all()

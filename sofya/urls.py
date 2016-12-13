@@ -18,16 +18,16 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from fileviewer import views
+from rest_framework.schemas import get_schema_view
+
+schema_view = get_schema_view(title='Pastebin API')
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+router.register(r'filehouses', views.FileHouseViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^', include('fileviewer.urls')),
-    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-    url(r'^users/$', views.UserList.as_view()),
-    #url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url('^schema/$', schema_view),
 ]
