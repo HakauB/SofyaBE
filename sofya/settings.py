@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    #'oauth2_provider',
     'fileviewer',
 ]
 
@@ -127,5 +128,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
     ],
+#    'DEFAULT_AUTHENTICATION_CLASSES': [
+#        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+#    ],
     'PAGE_SIZE': 10
 }
+
+#OAUTH2_PROVIDER = {
+#    # this is the list of available scopes
+#    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+#}

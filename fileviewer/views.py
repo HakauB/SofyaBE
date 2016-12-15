@@ -69,8 +69,7 @@ class FileHouseViewSet(viewsets.ModelViewSet):
     """
     queryset = FileHouse.objects.all()
     serializer_class = FileHouseSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
