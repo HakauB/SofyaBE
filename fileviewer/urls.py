@@ -14,6 +14,16 @@ filehouse_detail = FileHouseViewSet.as_view({
     'patch': 'partial_update',
     'delete': 'destroy'
 })
+actionconfigurations_list = ActionConfigurationViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+actionconfigurations_detail = ActionConfigurationViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
 user_list = UserViewSet.as_view({
     'get': 'list'
 })
@@ -26,6 +36,8 @@ urlpatterns = [
     url(r'^users/$', user_list, name='user-list'),
     url(r'^filehouse/$', filehouse_list, name='filehouse-list'),
     url(r'^filehouse/(?P<pk>[0-9]+)/$', filehouse_detail, name='filehouse-detail'),
+    url(r'^actionconfigurations/$', actionconfigurations_list, name='actionconfigurations-list'),
+    url(r'^actionconfigurations/(?P<pk>[0-9]+)/$', actionconfigurations_detail, name='actionconfigurations-detail'),
     url(r'^$', views.api_root),
 ]
 

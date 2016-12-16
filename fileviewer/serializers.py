@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from fileviewer.models import FileHouse
+from fileviewer.models import FileHouse, ActionConfiguration
 
 
 class UserSerializer(serializers.ModelSerializer):
 
     filehouses = serializers.HyperlinkedRelatedField(many=True, view_name='filehouse-detail', read_only=True)
+    actionconfigurations = serializers.HyperlinkedRelatedField(many=True, view_name='actionconfiguration-detail', read_only=True)
 
     class Meta:
         model = User
@@ -22,3 +23,10 @@ class FileHouseSerializer(serializers.ModelSerializer):
     class Meta:
         model = FileHouse
         fields = ('submitted', 'title', 'data', 'filetype', 'owner',)
+
+class ActionConfigurationSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+
+    class Meta:
+        model = ActionConfiguration
+        fields = ('action', 'arguments', 'owner',)

@@ -27,6 +27,7 @@ schema_view = get_schema_view(title='Pastebin API')
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'filehouses', views.FileHouseViewSet)
+router.register(r'actionconfigurations', views.ActionConfigurationViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

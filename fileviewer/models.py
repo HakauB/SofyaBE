@@ -11,3 +11,8 @@ class FileHouse(models.Model):
 
     class Meta:
         ordering = ('submitted',)
+
+class ActionConfiguration(models.Model):
+    action = models.CharField(max_length=255, default='')
+    arguments = models.CharField(max_length=255, default='')
+    owner = models.ForeignKey('auth.User', related_name='actionconfigurations', on_delete=models.CASCADE, default=0)

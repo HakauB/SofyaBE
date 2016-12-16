@@ -5,8 +5,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from fileviewer.models import FileHouse
-from fileviewer.serializers import FileHouseSerializer
+from fileviewer.models import FileHouse, ActionConfiguration
+from fileviewer.serializers import FileHouseSerializer, ActionConfigurationSerializer
 
 from django.http import Http404
 from rest_framework.views import APIView
@@ -69,6 +69,20 @@ class FileHouseViewSet(viewsets.ModelViewSet):
     """
     queryset = FileHouse.objects.all()
     serializer_class = FileHouseSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+class ActionConfigurationViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+    queryset = ActionConfiguration.objects.all()
+    serializer_class = ActionConfigurationSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
