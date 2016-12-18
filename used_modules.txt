@@ -1,0 +1,6 @@
+django
+django_rest
+django_excel
+scikit_learn
+redis
+celery
